@@ -1,6 +1,5 @@
 package sky.pro.hw210libraries.service;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,9 +10,9 @@ import sky.pro.hw210libraries.db.Employee;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static sky.pro.hw210libraries.service.Constants.RIGHT_DEPARTMENT_NUMBER;
-import static sky.pro.hw210libraries.service.Constants.WRONG_DEPARTMENT_NUMBER;
+import static sky.pro.hw210libraries.service.Constants.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DepartmentServiceTest {
@@ -99,13 +98,13 @@ public class DepartmentServiceTest {
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
         Employee actual = new Employee("Сулейман", "Мыколович", "Беспамятный", 5, 23_700);
         Employee result = out.findEmployeeWithMaxSalary(RIGHT_DEPARTMENT_NUMBER);
-        Assertions.assertEquals(actual, result);
+        assertEquals(actual, result);
     }
 
     @Test
     public void testFindEmployeeWithMaxSalaryForRuntimeException(){
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
-        Assertions.assertThrows(RuntimeException.class, () -> out.findEmployeeWithMaxSalary(WRONG_DEPARTMENT_NUMBER));
+        assertThrows(RuntimeException.class, () -> out.findEmployeeWithMaxSalary(WRONG_DEPARTMENT_NUMBER));
     }
 
     @Test
@@ -113,13 +112,13 @@ public class DepartmentServiceTest {
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
         Employee actual = new Employee("Казбек", "Дмитриевич", "Светлый", 5, 17_500);
         Employee result = out.findEmployeeWithMinSalary(RIGHT_DEPARTMENT_NUMBER);
-        Assertions.assertEquals(actual, result);
+        assertEquals(actual, result);
     }
 
     @Test
     public void testFindEmployeeWithMinSalaryForRuntimeException(){
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
-        Assertions.assertThrows(RuntimeException.class, () -> out.findEmployeeWithMinSalary(WRONG_DEPARTMENT_NUMBER));
+        assertThrows(RuntimeException.class, () -> out.findEmployeeWithMinSalary(WRONG_DEPARTMENT_NUMBER));
     }
 
     @Test
@@ -130,20 +129,20 @@ public class DepartmentServiceTest {
         actual.sort(employeeComparator);
         List<Employee> result = out.departmentEmployeeList(RIGHT_DEPARTMENT_NUMBER);
         result.sort(employeeComparator);
-        Assertions.assertEquals(actual, result);
+        assertEquals(actual, result);
     }
 
     @Test
     public void testDepartmentEmployeeListForEmptyList(){
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
-        Assertions.assertTrue(out.departmentEmployeeList(WRONG_DEPARTMENT_NUMBER).isEmpty());
+        assertTrue(out.departmentEmployeeList(WRONG_DEPARTMENT_NUMBER).isEmpty());
     }
 
     @Test
     public void testAllDepartmentsEmployeeList(){
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
         Map<Integer, Set<Employee>> result = out.allDepartmentsEmployeeList();
-        Assertions.assertEquals(allDepartmentsEmployeeList, result);
+        assertEquals(allDepartmentsEmployeeList, result);
     }
 
 }
