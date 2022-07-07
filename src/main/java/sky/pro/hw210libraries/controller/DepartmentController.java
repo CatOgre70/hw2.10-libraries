@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import sky.pro.hw210libraries.model.DepartmentService;
-import sky.pro.hw210libraries.model.Employee;
+import sky.pro.hw210libraries.service.DepartmentService;
+import sky.pro.hw210libraries.db.Employee;
 
 import java.util.List;
 import java.util.Map;

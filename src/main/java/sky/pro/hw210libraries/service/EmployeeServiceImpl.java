@@ -1,15 +1,18 @@
-package sky.pro.hw210libraries.model;
+package sky.pro.hw210libraries.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import sky.pro.hw210libraries.db.Employee;
+import sky.pro.hw210libraries.exception.EmployeeAlreadyAddedException;
+import sky.pro.hw210libraries.exception.EmployeeNotFoundException;
+import sky.pro.hw210libraries.exception.ErrorInNameException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
-
     private final Map<String, Employee> eBook;
-
     public EmployeeServiceImpl() {
 
         eBook = new HashMap<>();
@@ -24,9 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         eBook.put("АлибекДжунгаровичХомяков", new Employee("Алибек", "Джунгарович", "Хомяков", 3, 42_000));
         eBook.put("РустамИбрагимовичСулейбеков", new Employee("Рустам", "Ибрагимович", "Сулейбеков", 4, 22_000));
         eBook.put("ЗухраПетровнаДжугашвилли", new Employee("Зухра", "Петровна", "Джугашвилли", 4, 173_000));
-        Employee e = new Employee("Казбек", "Дмитриевич", "Светлый", 5, 17_500);
-        String key = e.getFirstName() + e.getMiddleName() + e.getLastName();
-        eBook.put(key, e);
+        eBook.put("КазбекДмитриевичСветлый", new Employee("Казбек", "Дмитриевич", "Светлый", 5, 17_500));
         eBook.put("СулейманМыколовичБеспамятный", new Employee("Сулейман", "Мыколович", "Беспамятный", 5, 23_700));
         eBook.put("МихайлоДмитриевичГлавко", new Employee("Михайло", "Дмитриевич", "Главко", 6, 110_300));
         eBook.put("ЕленаАрменовнаАкопян", new Employee("Елена", "Арменовна", "Акопян", 6, 199_999.99));
@@ -34,10 +35,13 @@ public class EmployeeServiceImpl implements EmployeeService{
         eBook.put("НатальяАльбертовнаРабинович", new Employee("Наталья", "Альбертовна", "Рабинович", 7, 29_794));
 
     }
-
-
     @Override
     public Employee addEmployee(String firstName, String middleName, String lastName, int department, double salary) {
+        if(validateInputData(firstName, middleName, lastName, department, salary)) {
+            firstName = normaliseNames(firstName);
+            middleName = normaliseNames(middleName);
+            lastName = normaliseNames(lastName);
+        }
         Employee e = new Employee(firstName, middleName, lastName, department, salary);
         String key = e.getFirstName() + e.getMiddleName() + e.getLastName();
         if(eBook.containsKey(key)){
@@ -47,7 +51,6 @@ public class EmployeeServiceImpl implements EmployeeService{
             return eBook.get(key);
         }
     }
-
     @Override
     public Employee removeEmployee(String firstName, String middleName, String lastName) {
         String key = firstName + middleName + lastName;
@@ -57,7 +60,6 @@ public class EmployeeServiceImpl implements EmployeeService{
             return eBook.remove(key);
         }
     }
-
     @Override
     public Employee findEmployee(String firstName, String middleName, String lastName) {
         String key = firstName + middleName + lastName;
@@ -67,10 +69,25 @@ public class EmployeeServiceImpl implements EmployeeService{
             return eBook.get(key);
         }
     }
-
     public Map<String, Employee> allEmployeeList() {
         return eBook;
     }
 
+    public boolean validateInputData(String firstName, String middleName, String lastName, int department, double salary){
+        if(firstName == null || middleName == null || lastName == null || department < 0 || department > 7 || salary < 0){
+            throw new IllegalArgumentException("Illegal input parameters for Employee class constructor");
+        } else {
+            return true;
+        }
+    }
+
+    public String normaliseNames(String name){
+        if(!StringUtils.isAlpha(name)){
+            throw new ErrorInNameException("Illegal first, middle or last name: they should contain only alphabet characters");
+        }
+        name = StringUtils.lowerCase(name);
+        name = StringUtils.capitalize(name);
+        return name;
+    }
 
 }
