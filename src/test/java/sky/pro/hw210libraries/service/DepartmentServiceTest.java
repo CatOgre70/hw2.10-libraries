@@ -96,9 +96,9 @@ public class DepartmentServiceTest {
     @Test
     public void testFindEmployeeWithMaxSalary(){
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
-        Employee actual = new Employee("Сулейман", "Мыколович", "Беспамятный", 5, 23_700);
+        Employee expected = new Employee("Сулейман", "Мыколович", "Беспамятный", 5, 23_700);
         Employee result = out.findEmployeeWithMaxSalary(RIGHT_DEPARTMENT_NUMBER);
-        assertEquals(actual, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -110,9 +110,9 @@ public class DepartmentServiceTest {
     @Test
     public void testFindEmployeeWithMinSalary(){
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
-        Employee actual = new Employee("Казбек", "Дмитриевич", "Светлый", 5, 17_500);
+        Employee expected = new Employee("Казбек", "Дмитриевич", "Светлый", 5, 17_500);
         Employee result = out.findEmployeeWithMinSalary(RIGHT_DEPARTMENT_NUMBER);
-        assertEquals(actual, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -125,11 +125,11 @@ public class DepartmentServiceTest {
     public void testDepartmentEmployeeList(){
         Comparator<Employee> employeeComparator = Comparator.comparing(Employee::getLastName);
         when(employeeServiceMock.allEmployeeList()).thenReturn(allEmployeeList);
-        List<Employee> actual = department5List;
-        actual.sort(employeeComparator);
+        List<Employee> expected = department5List;
+        expected.sort(employeeComparator);
         List<Employee> result = out.departmentEmployeeList(RIGHT_DEPARTMENT_NUMBER);
         result.sort(employeeComparator);
-        assertEquals(actual, result);
+        assertEquals(expected, result);
     }
 
     @Test

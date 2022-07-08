@@ -2,6 +2,7 @@ package sky.pro.hw210libraries.service;
 
 import org.springframework.stereotype.Service;
 import sky.pro.hw210libraries.db.Employee;
+import sky.pro.hw210libraries.exception.EmployeeNotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -21,36 +22,36 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Employee findEmployeeWithMaxSalary(int department) {
-        return employeeService.allEmployeeList().keySet().stream()
-                .filter(s -> employeeService.allEmployeeList().get(s).getDepartment() == department)
-                .map(employeeService.allEmployeeList()::get)
+
+        return employeeService.allEmployeeList().values().stream()
+                .filter(e -> e.getDepartment() == department)
                 .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(() -> new RuntimeException("Wrong department number in the " +
+                .orElseThrow(() -> new EmployeeNotFoundException("Wrong department number in the " +
                         "DepartmentService.findEmployeeWithMaxSalary() method argument!"));
+
     }
 
     @Override
     public Employee findEmployeeWithMinSalary(int department) {
-        return employeeService.allEmployeeList().keySet().stream()
-                .filter(s -> employeeService.allEmployeeList().get(s).getDepartment() == department)
-                .map(employeeService.allEmployeeList()::get)
+
+        return employeeService.allEmployeeList().values().stream()
+                .filter(e -> e.getDepartment() == department)
                 .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(() -> new RuntimeException("Wrong department number in the " +
+                .orElseThrow(() -> new EmployeeNotFoundException("Wrong department number in the " +
                         "DepartmentService.findEmployeeWithMaxSalary() method argument!"));
+
     }
 
     @Override
     public List<Employee> departmentEmployeeList(int department) {
-        return employeeService.allEmployeeList().keySet().stream()
-                .filter(s -> employeeService.allEmployeeList().get(s).getDepartment() == department)
-                .map(employeeService.allEmployeeList()::get)
+        return employeeService.allEmployeeList().values().stream()
+                .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Map<Integer, Set<Employee>> allDepartmentsEmployeeList() {
-        return employeeService.allEmployeeList().keySet().stream()
-                .map(employeeService.allEmployeeList()::get)
+        return employeeService.allEmployeeList().values().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.toSet()));
     }
 

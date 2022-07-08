@@ -37,6 +37,10 @@ public class Employee {
         return salary;
     }
 
+    public String getKey(){
+        return firstName + middleName + lastName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

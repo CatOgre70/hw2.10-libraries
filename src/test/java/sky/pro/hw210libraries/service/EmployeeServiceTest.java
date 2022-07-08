@@ -18,7 +18,7 @@ import static sky.pro.hw210libraries.service.Constants.*;
 
 public class EmployeeServiceTest {
 
-    EmployeeService employeeService = new EmployeeServiceImpl();
+    private final EmployeeService employeeService = new EmployeeServiceImpl();
 
     @ParameterizedTest
     @MethodSource("provideWrongParamsForIllegalArgumentException")

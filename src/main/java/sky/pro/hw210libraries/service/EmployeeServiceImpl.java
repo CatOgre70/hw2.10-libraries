@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             lastName = normaliseNames(lastName);
         }
         Employee e = new Employee(firstName, middleName, lastName, department, salary);
-        String key = e.getFirstName() + e.getMiddleName() + e.getLastName();
+        String key = e.getKey();
         if(eBook.containsKey(key)){
             throw new EmployeeAlreadyAddedException("Employee with such first, middle and last names already added into the database");
         } else {
@@ -86,8 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             throw new ErrorInNameException("Illegal first, middle or last name: they should contain only alphabet characters");
         }
         name = StringUtils.lowerCase(name);
-        name = StringUtils.capitalize(name);
-        return name;
+        return StringUtils.capitalize(name);
     }
 
 }
