@@ -1,0 +1,25 @@
+GET http://localhost:8080/employee/add?firstname=Василий&middlename=Васильевич&lastname=Семенов&departmentId=0&salary=120000
+###
+GET http://localhost:8080/employee/add?firstname=Василий&middlename=Васильевич&lastname=Семенов&departmentId=0&salary=120000
+###
+GET http://localhost:8080/employee/add?firstname=Семен&middlename=Семенович&lastname=Горбунков&departmentId=0&salary=120000
+###
+GET http://localhost:8080/employee/find?firstname=Семен&middlename=Семенович&lastname=Горбунков
+###
+GET http://localhost:8080/employee/remove?firstname=Семен&middlename=Семенович&lastname=Горбунков
+###
+GET http://localhost:8080/employee/remove?firstname=Василий&middlename=Васильевич&lastname=Семенов
+###
+GET http://localhost:8080/employee/add?firstname=василий&middlename=васильевич&lastname=сеМеНов&departmentId=0&salary=120000
+###
+GET http://localhost:8080/employee/add?firstname=васи8ий&middlename=васи#ьевич&lastname=сеМеН,в&departmentId=0&salary=120000
+###
+GET http://localhost:8080/employee/list
+###
+GET http://localhost:8080/departments/all
+###
+GET http://localhost:8080/departments/all?departmentId=5
+###
+GET http://localhost:8080/departments/max-salary?departmentId=5
+###
+GET http://localhost:8080/departments/min-salary?departmentId=5
